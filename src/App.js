@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import BodyBackgroundColor from "react-body-backgroundcolor";
 import Login from "./Login.js";
 import Register from "./Register.js";
