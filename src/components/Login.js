@@ -1,22 +1,37 @@
 import React from "react";
-import Modal from "./Modal.js";
+import { Link, Redirect } from "react-router-dom";
+
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", password: "" };
+    this.state = { username: "",
+                   password: "",
+                   redirect: false };
   }
 
   handleChange = ({ target }) => {
     this.setState({ [target.name]: target.value });
-    console.log(target.value);
  };
-  
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const { redirect, ...login }= this.state;
+    if (!this.props.login(login)) {
+      alert("Invalid User, Try Again");
+    }else{
+      alert("Successfully Logged In");
+      this.setState({ redirect: true });
+    }
+  };
+
   render() {
+    const ifRedirect = this.state.redirect;
     return (
-      <Modal show={this.props.show} handleClose={this.props.hideModal}>
         <React.Fragment>
-        <form className="container animate">
+          {ifRedirect ? <Redirect to='/'/> :
+        <>
+        <form className="container animate" onSubmit={this.handleSubmit} >
           <label htmlFor="username">
             <b>Username</b>
           </label>
@@ -28,7 +43,7 @@ class Login extends React.Component {
             onChange={this.handleChange}
             required
           />
-          
+
           <label htmlFor="password">
             <b>Password</b>
           </label>
@@ -40,12 +55,15 @@ class Login extends React.Component {
             onChange={this.handleChange}
             required
           />
-          
+          <button type="submit">Login</button>
         </form>
-        
+        <div>
+          Forgot Password? <Link to="/forgot">Click here</Link>
+        </div>
+        </>
+          }
         </React.Fragment>
-        <button type="submit">Login</button>
-      </Modal>
+
     );
   };
 }
