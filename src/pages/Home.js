@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const Home = ({ getContacts }) => {
-  const contacts = getContacts().map(contact => (
-    <div key={contact.id}>
-      {contact.firstname} {contact.lastname}
-    </div>
-  ));
+const Home = () => {
+
+  const [contactData, setContactData] = useState();
+  
+  useEffect(() => {
+    fetch("http://localhost:4000", {
+      method: "GET"
+    })
+    .then(res => res.json())
+    .then(data => data.map((name,i) => {
+      return (<div key={name.phone}>
+        {name.firstname} {name.lastname}
+      </div>) 
+    }))
+    .then(names => {setContactData(names)})
+    .catch(err => console.log(err))
+  });
+
   return (
     <div id="homePage">
       Welcome To Your Contact List
-      {contacts}
+      <br />
+      <br />
+      {contactData}
     </div>
   );
 };
