@@ -8,7 +8,7 @@ class Register extends React.Component {
                    phone: "", age: "", password: "",
                    confirmPassword : "", redirect: false};
   }
-
+  
   handleSubmit = event => {
     event.preventDefault();
     if(this.state.password !== this.state.confirmPassword){
@@ -21,7 +21,7 @@ class Register extends React.Component {
     }else {
       alert("User Created!");
       this.setState({redirect:true})
-    }
+    } 
   };
 
   handleChange = ({ target }) => {

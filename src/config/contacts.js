@@ -4,7 +4,7 @@ export const getContacts = () =>{
     return contacts
 }
 
-export const addContact = contact => {
+export const addContact = async contact => {
   console.log(contact.firstname);
     let result = false;
     if(contact.firstname &&
@@ -13,10 +13,14 @@ export const addContact = contact => {
         contact.phone &&
         contact.age &&
         contact.password) {
+            console.log(contact)
+            await fetch("http://localhost:4000", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify(contact)
+              })  
                           contact.id = contacts.length
-                          contacts.push(contact);
                           result = true
-                          console.log(contacts);
                           }
     return result
 }

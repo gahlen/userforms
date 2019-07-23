@@ -10,7 +10,7 @@ const Home = () => {
     })
     .then(res => res.json())
     .then(data => data.map((name,i) => {
-      return (<div key={name.phone}>
+      return (<div key={name.id}>
         {name.firstname} {name.lastname}
       </div>) 
     }))
