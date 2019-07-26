@@ -4,7 +4,7 @@ export const getContacts = () =>{
     return contacts
 }
 
-export const addContact = async contact => {
+export const addContact = contact => {
   console.log(contact.firstname);
     let result = false;
     if(contact.firstname &&
@@ -14,29 +14,38 @@ export const addContact = async contact => {
         contact.age &&
         contact.password) {
             console.log(contact)
-            await fetch("http://localhost:4000", {
+            fetch("http://localhost:4000", {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'}, 
                 body: JSON.stringify(contact)
               })  
-                          contact.id = contacts.length
-                          result = true
+        result = true
                           }
+    console.log(result)                      
     return result
 }
 
 export const login = (credentials) => {
-    console.log(credentials);
+    console.log("Log Credentials",credentials);
     let result = false
-    contacts.forEach(contact => {
-        console.log(contact.email);
-        console.log(contact.password);
-        console.log(credentials.email);
-        console.log(credentials.password);
-        if(contact.email === credentials.email &&
-            contact.password === credentials.password){
-                result = true
-            }
-    })
+    
+    result = fetch("http://localhost:4000")
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(contacts) {
+    if(contacts.some(contact => {
+        return (contact.email === credentials.username &&
+            contact.password === credentials.password);          
+    })) {
+        return true;
+    } else {
+        return false;
+    }
+    
+  })  
+    console.log("result3", result);
     return result
 }
+
+

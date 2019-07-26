@@ -14,10 +14,11 @@ class Login extends React.Component {
     this.setState({ [target.name]: target.value });
  };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
     const { redirect, ...login }= this.state;
-    if (!this.props.login(login)) {
+    const isLoggedIn = await this.props.login(login)
+    if (!isLoggedIn) {
       alert("Invalid User, Try Again");
     }else{
       alert("Successfully Logged In");

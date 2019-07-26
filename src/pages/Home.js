@@ -9,14 +9,14 @@ const Home = () => {
       method: "GET"
     })
     .then(res => res.json())
-    .then(data => data.map((name,i) => {
+    .then(data => data.map((name) => {
       return (<div key={name.id}>
         {name.firstname} {name.lastname}
       </div>) 
     }))
     .then(names => {setContactData(names)})
     .catch(err => console.log(err))
-  });
+  },[]);
 
   return (
     <div id="homePage">
